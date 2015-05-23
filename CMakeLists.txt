@@ -1,0 +1,11 @@
+cmake_minimum_required (VERSION 2.6)
+project (vslam)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/build/lib)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/build/lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/build/bin)
+find_package( OpenCV REQUIRED ) 
+include_directories ("${PROJECT_SOURCE_DIR}/features2d")
+add_subdirectory (features2d) 
+add_executable(feature_test test/feature_test.cpp)
+target_link_libraries (feature_test features2d ${OpenCV_LIBS})
+
