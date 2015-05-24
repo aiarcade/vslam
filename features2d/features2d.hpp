@@ -14,6 +14,7 @@
 
 #define SIFT 1
 #define SURF 2
+#define CUSTOM 3
 
 class  FeatureDetector{
     
@@ -21,9 +22,12 @@ class  FeatureDetector{
         FeatureDetector(int type);
         void extractFeatures(cv::Mat *image);
         void drawAndSave(char *file);
+        cv::Mat getDescriptors();
+        std::vector  <cv::KeyPoint> getKeyPoints();
         
     private:
         void extractSIFTFeatures();
+        void extractCustomFeatures();
         int type;
         cv::Mat * input_image;
         std::vector  <cv::KeyPoint> keypoints;

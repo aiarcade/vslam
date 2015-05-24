@@ -72,14 +72,14 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/mahesh/Dropbox/shared/main_project/vslam/CMakeFiles /home/mahesh/Dropbox/shared/main_project/vslam/CMakeFiles/progress.marks
-	$(MAKE) -f CMakeFiles/Makefile2 all
+	cd /home/mahesh/Dropbox/shared/main_project/vslam && $(CMAKE_COMMAND) -E cmake_progress_start /home/mahesh/Dropbox/shared/main_project/vslam/CMakeFiles /home/mahesh/Dropbox/shared/main_project/vslam/matchlib/CMakeFiles/progress.marks
+	cd /home/mahesh/Dropbox/shared/main_project/vslam && $(MAKE) -f CMakeFiles/Makefile2 matchlib/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/mahesh/Dropbox/shared/main_project/vslam/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	$(MAKE) -f CMakeFiles/Makefile2 clean
+	cd /home/mahesh/Dropbox/shared/main_project/vslam && $(MAKE) -f CMakeFiles/Makefile2 matchlib/clean
 .PHONY : clean
 
 # The main clean target
@@ -88,81 +88,56 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	$(MAKE) -f CMakeFiles/Makefile2 preinstall
+	cd /home/mahesh/Dropbox/shared/main_project/vslam && $(MAKE) -f CMakeFiles/Makefile2 matchlib/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	$(MAKE) -f CMakeFiles/Makefile2 preinstall
+	cd /home/mahesh/Dropbox/shared/main_project/vslam && $(MAKE) -f CMakeFiles/Makefile2 matchlib/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	$(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/mahesh/Dropbox/shared/main_project/vslam && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
-#=============================================================================
-# Target rules for targets named feature_test
+# Convenience name for target.
+matchlib/CMakeFiles/matchlib.dir/rule:
+	cd /home/mahesh/Dropbox/shared/main_project/vslam && $(MAKE) -f CMakeFiles/Makefile2 matchlib/CMakeFiles/matchlib.dir/rule
+.PHONY : matchlib/CMakeFiles/matchlib.dir/rule
 
-# Build rule for target.
-feature_test: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 feature_test
-.PHONY : feature_test
-
-# fast build rule for target.
-feature_test/fast:
-	$(MAKE) -f CMakeFiles/feature_test.dir/build.make CMakeFiles/feature_test.dir/build
-.PHONY : feature_test/fast
-
-#=============================================================================
-# Target rules for targets named features2d
-
-# Build rule for target.
-features2d: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 features2d
-.PHONY : features2d
-
-# fast build rule for target.
-features2d/fast:
-	$(MAKE) -f features2d/CMakeFiles/features2d.dir/build.make features2d/CMakeFiles/features2d.dir/build
-.PHONY : features2d/fast
-
-#=============================================================================
-# Target rules for targets named matchlib
-
-# Build rule for target.
-matchlib: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 matchlib
+# Convenience name for target.
+matchlib: matchlib/CMakeFiles/matchlib.dir/rule
 .PHONY : matchlib
 
 # fast build rule for target.
 matchlib/fast:
-	$(MAKE) -f matchlib/CMakeFiles/matchlib.dir/build.make matchlib/CMakeFiles/matchlib.dir/build
+	cd /home/mahesh/Dropbox/shared/main_project/vslam && $(MAKE) -f matchlib/CMakeFiles/matchlib.dir/build.make matchlib/CMakeFiles/matchlib.dir/build
 .PHONY : matchlib/fast
 
-test/feature_test.o: test/feature_test.cpp.o
-.PHONY : test/feature_test.o
+matchlib.o: matchlib.cpp.o
+.PHONY : matchlib.o
 
 # target to build an object file
-test/feature_test.cpp.o:
-	$(MAKE) -f CMakeFiles/feature_test.dir/build.make CMakeFiles/feature_test.dir/test/feature_test.cpp.o
-.PHONY : test/feature_test.cpp.o
+matchlib.cpp.o:
+	cd /home/mahesh/Dropbox/shared/main_project/vslam && $(MAKE) -f matchlib/CMakeFiles/matchlib.dir/build.make matchlib/CMakeFiles/matchlib.dir/matchlib.cpp.o
+.PHONY : matchlib.cpp.o
 
-test/feature_test.i: test/feature_test.cpp.i
-.PHONY : test/feature_test.i
+matchlib.i: matchlib.cpp.i
+.PHONY : matchlib.i
 
 # target to preprocess a source file
-test/feature_test.cpp.i:
-	$(MAKE) -f CMakeFiles/feature_test.dir/build.make CMakeFiles/feature_test.dir/test/feature_test.cpp.i
-.PHONY : test/feature_test.cpp.i
+matchlib.cpp.i:
+	cd /home/mahesh/Dropbox/shared/main_project/vslam && $(MAKE) -f matchlib/CMakeFiles/matchlib.dir/build.make matchlib/CMakeFiles/matchlib.dir/matchlib.cpp.i
+.PHONY : matchlib.cpp.i
 
-test/feature_test.s: test/feature_test.cpp.s
-.PHONY : test/feature_test.s
+matchlib.s: matchlib.cpp.s
+.PHONY : matchlib.s
 
 # target to generate assembly for a file
-test/feature_test.cpp.s:
-	$(MAKE) -f CMakeFiles/feature_test.dir/build.make CMakeFiles/feature_test.dir/test/feature_test.cpp.s
-.PHONY : test/feature_test.cpp.s
+matchlib.cpp.s:
+	cd /home/mahesh/Dropbox/shared/main_project/vslam && $(MAKE) -f matchlib/CMakeFiles/matchlib.dir/build.make matchlib/CMakeFiles/matchlib.dir/matchlib.cpp.s
+.PHONY : matchlib.cpp.s
 
 # Help Target
 help:
@@ -171,13 +146,11 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... edit_cache"
-	@echo "... feature_test"
-	@echo "... rebuild_cache"
-	@echo "... features2d"
 	@echo "... matchlib"
-	@echo "... test/feature_test.o"
-	@echo "... test/feature_test.i"
-	@echo "... test/feature_test.s"
+	@echo "... rebuild_cache"
+	@echo "... matchlib.o"
+	@echo "... matchlib.i"
+	@echo "... matchlib.s"
 .PHONY : help
 
 
@@ -189,6 +162,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	$(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/mahesh/Dropbox/shared/main_project/vslam && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

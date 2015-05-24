@@ -1,4 +1,4 @@
-# Install script for directory: /home/mahesh/Dropbox/shared/main_project/vslam
+# Install script for directory: /home/mahesh/Dropbox/shared/main_project/vslam/matchlib
 
 # Set the install prefix
 IF(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -32,20 +32,3 @@ IF(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
   SET(CMAKE_INSTALL_SO_NO_EXE "1")
 ENDIF(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
 
-IF(NOT CMAKE_INSTALL_LOCAL_ONLY)
-  # Include the install script for each subdirectory.
-  INCLUDE("/home/mahesh/Dropbox/shared/main_project/vslam/features2d/cmake_install.cmake")
-  INCLUDE("/home/mahesh/Dropbox/shared/main_project/vslam/matchlib/cmake_install.cmake")
-
-ENDIF(NOT CMAKE_INSTALL_LOCAL_ONLY)
-
-IF(CMAKE_INSTALL_COMPONENT)
-  SET(CMAKE_INSTALL_MANIFEST "install_manifest_${CMAKE_INSTALL_COMPONENT}.txt")
-ELSE(CMAKE_INSTALL_COMPONENT)
-  SET(CMAKE_INSTALL_MANIFEST "install_manifest.txt")
-ENDIF(CMAKE_INSTALL_COMPONENT)
-
-FILE(WRITE "/home/mahesh/Dropbox/shared/main_project/vslam/${CMAKE_INSTALL_MANIFEST}" "")
-FOREACH(file ${CMAKE_INSTALL_MANIFEST_FILES})
-  FILE(APPEND "/home/mahesh/Dropbox/shared/main_project/vslam/${CMAKE_INSTALL_MANIFEST}" "${file}\n")
-ENDFOREACH(file)
