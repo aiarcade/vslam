@@ -17,10 +17,10 @@ int main( int argc, char** argv )
     cv::Mat output_image;
     input_image_r = cv::imread(argv[1],CV_LOAD_IMAGE_GRAYSCALE);   
     input_image_l = cv::imread(argv[2],CV_LOAD_IMAGE_GRAYSCALE);
-    FeatureDetector *fd_r=new FeatureDetector(3);
+    FeatureDetector *fd_r=new FeatureDetector(1);
     fd_r->extractFeatures(&input_image_r);
    
-    FeatureDetector *fd_l=new FeatureDetector(3);
+    FeatureDetector *fd_l=new FeatureDetector(1);
     fd_l->extractFeatures(&input_image_l);
    
     Matcher * matcher= new Matcher(1);

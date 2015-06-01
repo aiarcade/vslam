@@ -12,6 +12,7 @@ class Matcher
         Matcher(int type);
         void match(cv::Mat descriptors_1, cv::Mat descriptors_2);
         std::vector< cv::DMatch > getMatches();
+        std::vector< cv::DMatch > getAllMatches();
     private:
         std::vector< cv::DMatch > matches;
         std::vector< cv::DMatch > good_matches;

@@ -44,4 +44,9 @@ std::vector< cv::DMatch > Matcher::getMatches()
     
 }
 
+std::vector< cv::DMatch > Matcher::getAllMatches()
+{
+    return  matches;
+    
+}
 

@@ -9,5 +9,7 @@ include_directories ("${PROJECT_SOURCE_DIR}/matchlib")
 add_subdirectory (features2d) 
 add_subdirectory (matchlib) 
 add_executable(feature_test test/feature_test.cpp)
+add_executable(3d_test test/pointcloud_test.cpp)
 target_link_libraries (feature_test features2d matchlib ${OpenCV_LIBS})
+target_link_libraries (3d_test features2d matchlib ${OpenCV_LIBS})
 

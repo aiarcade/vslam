@@ -102,6 +102,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named 3d_test
+
+# Build rule for target.
+3d_test: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 3d_test
+.PHONY : 3d_test
+
+# fast build rule for target.
+3d_test/fast:
+	$(MAKE) -f CMakeFiles/3d_test.dir/build.make CMakeFiles/3d_test.dir/build
+.PHONY : 3d_test/fast
+
+#=============================================================================
 # Target rules for targets named feature_test
 
 # Build rule for target.
@@ -164,12 +177,37 @@ test/feature_test.cpp.s:
 	$(MAKE) -f CMakeFiles/feature_test.dir/build.make CMakeFiles/feature_test.dir/test/feature_test.cpp.s
 .PHONY : test/feature_test.cpp.s
 
+test/pointcloud_test.o: test/pointcloud_test.cpp.o
+.PHONY : test/pointcloud_test.o
+
+# target to build an object file
+test/pointcloud_test.cpp.o:
+	$(MAKE) -f CMakeFiles/3d_test.dir/build.make CMakeFiles/3d_test.dir/test/pointcloud_test.cpp.o
+.PHONY : test/pointcloud_test.cpp.o
+
+test/pointcloud_test.i: test/pointcloud_test.cpp.i
+.PHONY : test/pointcloud_test.i
+
+# target to preprocess a source file
+test/pointcloud_test.cpp.i:
+	$(MAKE) -f CMakeFiles/3d_test.dir/build.make CMakeFiles/3d_test.dir/test/pointcloud_test.cpp.i
+.PHONY : test/pointcloud_test.cpp.i
+
+test/pointcloud_test.s: test/pointcloud_test.cpp.s
+.PHONY : test/pointcloud_test.s
+
+# target to generate assembly for a file
+test/pointcloud_test.cpp.s:
+	$(MAKE) -f CMakeFiles/3d_test.dir/build.make CMakeFiles/3d_test.dir/test/pointcloud_test.cpp.s
+.PHONY : test/pointcloud_test.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
+	@echo "... 3d_test"
 	@echo "... edit_cache"
 	@echo "... feature_test"
 	@echo "... rebuild_cache"
@@ -178,6 +216,9 @@ help:
 	@echo "... test/feature_test.o"
 	@echo "... test/feature_test.i"
 	@echo "... test/feature_test.s"
+	@echo "... test/pointcloud_test.o"
+	@echo "... test/pointcloud_test.i"
+	@echo "... test/pointcloud_test.s"
 .PHONY : help
 
 
