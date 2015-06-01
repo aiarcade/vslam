@@ -39,13 +39,13 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The program to use to edit the cache.
-CMAKE_EDIT_COMMAND = /usr/bin/ccmake
+CMAKE_EDIT_COMMAND = /usr/bin/cmake-gui
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/mahesh/Dropbox/shared/main_project/vslam
+CMAKE_SOURCE_DIR = /home/mahesh/slam-phase2/slam
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/mahesh/Dropbox/shared/main_project/vslam
+CMAKE_BINARY_DIR = /home/mahesh/slam-phase2/slam
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -53,7 +53,7 @@ CMAKE_BINARY_DIR = /home/mahesh/Dropbox/shared/main_project/vslam
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
-	/usr/bin/ccmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/usr/bin/cmake-gui -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -72,14 +72,14 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/mahesh/Dropbox/shared/main_project/vslam && $(CMAKE_COMMAND) -E cmake_progress_start /home/mahesh/Dropbox/shared/main_project/vslam/CMakeFiles /home/mahesh/Dropbox/shared/main_project/vslam/features2d/CMakeFiles/progress.marks
-	cd /home/mahesh/Dropbox/shared/main_project/vslam && $(MAKE) -f CMakeFiles/Makefile2 features2d/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/mahesh/Dropbox/shared/main_project/vslam/CMakeFiles 0
+	cd /home/mahesh/slam-phase2/slam && $(CMAKE_COMMAND) -E cmake_progress_start /home/mahesh/slam-phase2/slam/CMakeFiles /home/mahesh/slam-phase2/slam/features2d/CMakeFiles/progress.marks
+	cd /home/mahesh/slam-phase2/slam && $(MAKE) -f CMakeFiles/Makefile2 features2d/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/mahesh/slam-phase2/slam/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/mahesh/Dropbox/shared/main_project/vslam && $(MAKE) -f CMakeFiles/Makefile2 features2d/clean
+	cd /home/mahesh/slam-phase2/slam && $(MAKE) -f CMakeFiles/Makefile2 features2d/clean
 .PHONY : clean
 
 # The main clean target
@@ -88,22 +88,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/mahesh/Dropbox/shared/main_project/vslam && $(MAKE) -f CMakeFiles/Makefile2 features2d/preinstall
+	cd /home/mahesh/slam-phase2/slam && $(MAKE) -f CMakeFiles/Makefile2 features2d/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/mahesh/Dropbox/shared/main_project/vslam && $(MAKE) -f CMakeFiles/Makefile2 features2d/preinstall
+	cd /home/mahesh/slam-phase2/slam && $(MAKE) -f CMakeFiles/Makefile2 features2d/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/mahesh/Dropbox/shared/main_project/vslam && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/mahesh/slam-phase2/slam && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 features2d/CMakeFiles/features2d.dir/rule:
-	cd /home/mahesh/Dropbox/shared/main_project/vslam && $(MAKE) -f CMakeFiles/Makefile2 features2d/CMakeFiles/features2d.dir/rule
+	cd /home/mahesh/slam-phase2/slam && $(MAKE) -f CMakeFiles/Makefile2 features2d/CMakeFiles/features2d.dir/rule
 .PHONY : features2d/CMakeFiles/features2d.dir/rule
 
 # Convenience name for target.
@@ -112,7 +112,7 @@ features2d: features2d/CMakeFiles/features2d.dir/rule
 
 # fast build rule for target.
 features2d/fast:
-	cd /home/mahesh/Dropbox/shared/main_project/vslam && $(MAKE) -f features2d/CMakeFiles/features2d.dir/build.make features2d/CMakeFiles/features2d.dir/build
+	cd /home/mahesh/slam-phase2/slam && $(MAKE) -f features2d/CMakeFiles/features2d.dir/build.make features2d/CMakeFiles/features2d.dir/build
 .PHONY : features2d/fast
 
 features2d.o: features2d.cpp.o
@@ -120,7 +120,7 @@ features2d.o: features2d.cpp.o
 
 # target to build an object file
 features2d.cpp.o:
-	cd /home/mahesh/Dropbox/shared/main_project/vslam && $(MAKE) -f features2d/CMakeFiles/features2d.dir/build.make features2d/CMakeFiles/features2d.dir/features2d.cpp.o
+	cd /home/mahesh/slam-phase2/slam && $(MAKE) -f features2d/CMakeFiles/features2d.dir/build.make features2d/CMakeFiles/features2d.dir/features2d.cpp.o
 .PHONY : features2d.cpp.o
 
 features2d.i: features2d.cpp.i
@@ -128,7 +128,7 @@ features2d.i: features2d.cpp.i
 
 # target to preprocess a source file
 features2d.cpp.i:
-	cd /home/mahesh/Dropbox/shared/main_project/vslam && $(MAKE) -f features2d/CMakeFiles/features2d.dir/build.make features2d/CMakeFiles/features2d.dir/features2d.cpp.i
+	cd /home/mahesh/slam-phase2/slam && $(MAKE) -f features2d/CMakeFiles/features2d.dir/build.make features2d/CMakeFiles/features2d.dir/features2d.cpp.i
 .PHONY : features2d.cpp.i
 
 features2d.s: features2d.cpp.s
@@ -136,7 +136,7 @@ features2d.s: features2d.cpp.s
 
 # target to generate assembly for a file
 features2d.cpp.s:
-	cd /home/mahesh/Dropbox/shared/main_project/vslam && $(MAKE) -f features2d/CMakeFiles/features2d.dir/build.make features2d/CMakeFiles/features2d.dir/features2d.cpp.s
+	cd /home/mahesh/slam-phase2/slam && $(MAKE) -f features2d/CMakeFiles/features2d.dir/build.make features2d/CMakeFiles/features2d.dir/features2d.cpp.s
 .PHONY : features2d.cpp.s
 
 # Help Target
@@ -162,6 +162,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/mahesh/Dropbox/shared/main_project/vslam && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/mahesh/slam-phase2/slam && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

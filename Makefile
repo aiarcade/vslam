@@ -39,13 +39,13 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The program to use to edit the cache.
-CMAKE_EDIT_COMMAND = /usr/bin/ccmake
+CMAKE_EDIT_COMMAND = /usr/bin/cmake-gui
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/mahesh/Dropbox/shared/main_project/vslam
+CMAKE_SOURCE_DIR = /home/mahesh/slam-phase2/slam
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/mahesh/Dropbox/shared/main_project/vslam
+CMAKE_BINARY_DIR = /home/mahesh/slam-phase2/slam
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -53,7 +53,7 @@ CMAKE_BINARY_DIR = /home/mahesh/Dropbox/shared/main_project/vslam
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
-	/usr/bin/ccmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/usr/bin/cmake-gui -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -72,9 +72,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/mahesh/Dropbox/shared/main_project/vslam/CMakeFiles /home/mahesh/Dropbox/shared/main_project/vslam/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/mahesh/slam-phase2/slam/CMakeFiles /home/mahesh/slam-phase2/slam/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/mahesh/Dropbox/shared/main_project/vslam/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/mahesh/slam-phase2/slam/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -100,6 +100,19 @@ preinstall/fast:
 depend:
 	$(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
+
+#=============================================================================
+# Target rules for targets named 3d_ptest
+
+# Build rule for target.
+3d_ptest: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 3d_ptest
+.PHONY : 3d_ptest
+
+# fast build rule for target.
+3d_ptest/fast:
+	$(MAKE) -f CMakeFiles/3d_ptest.dir/build.make CMakeFiles/3d_ptest.dir/build
+.PHONY : 3d_ptest/fast
 
 #=============================================================================
 # Target rules for targets named 3d_test
@@ -201,12 +214,37 @@ test/pointcloud_test.cpp.s:
 	$(MAKE) -f CMakeFiles/3d_test.dir/build.make CMakeFiles/3d_test.dir/test/pointcloud_test.cpp.s
 .PHONY : test/pointcloud_test.cpp.s
 
+test/pointcloud_with_projection_test.o: test/pointcloud_with_projection_test.cpp.o
+.PHONY : test/pointcloud_with_projection_test.o
+
+# target to build an object file
+test/pointcloud_with_projection_test.cpp.o:
+	$(MAKE) -f CMakeFiles/3d_ptest.dir/build.make CMakeFiles/3d_ptest.dir/test/pointcloud_with_projection_test.cpp.o
+.PHONY : test/pointcloud_with_projection_test.cpp.o
+
+test/pointcloud_with_projection_test.i: test/pointcloud_with_projection_test.cpp.i
+.PHONY : test/pointcloud_with_projection_test.i
+
+# target to preprocess a source file
+test/pointcloud_with_projection_test.cpp.i:
+	$(MAKE) -f CMakeFiles/3d_ptest.dir/build.make CMakeFiles/3d_ptest.dir/test/pointcloud_with_projection_test.cpp.i
+.PHONY : test/pointcloud_with_projection_test.cpp.i
+
+test/pointcloud_with_projection_test.s: test/pointcloud_with_projection_test.cpp.s
+.PHONY : test/pointcloud_with_projection_test.s
+
+# target to generate assembly for a file
+test/pointcloud_with_projection_test.cpp.s:
+	$(MAKE) -f CMakeFiles/3d_ptest.dir/build.make CMakeFiles/3d_ptest.dir/test/pointcloud_with_projection_test.cpp.s
+.PHONY : test/pointcloud_with_projection_test.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
+	@echo "... 3d_ptest"
 	@echo "... 3d_test"
 	@echo "... edit_cache"
 	@echo "... feature_test"
@@ -219,6 +257,9 @@ help:
 	@echo "... test/pointcloud_test.o"
 	@echo "... test/pointcloud_test.i"
 	@echo "... test/pointcloud_test.s"
+	@echo "... test/pointcloud_with_projection_test.o"
+	@echo "... test/pointcloud_with_projection_test.i"
+	@echo "... test/pointcloud_with_projection_test.s"
 .PHONY : help
 
 

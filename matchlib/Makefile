@@ -39,13 +39,13 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The program to use to edit the cache.
-CMAKE_EDIT_COMMAND = /usr/bin/ccmake
+CMAKE_EDIT_COMMAND = /usr/bin/cmake-gui
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/mahesh/Dropbox/shared/main_project/vslam
+CMAKE_SOURCE_DIR = /home/mahesh/slam-phase2/slam
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/mahesh/Dropbox/shared/main_project/vslam
+CMAKE_BINARY_DIR = /home/mahesh/slam-phase2/slam
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -53,7 +53,7 @@ CMAKE_BINARY_DIR = /home/mahesh/Dropbox/shared/main_project/vslam
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
-	/usr/bin/ccmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/usr/bin/cmake-gui -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -72,14 +72,14 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/mahesh/Dropbox/shared/main_project/vslam && $(CMAKE_COMMAND) -E cmake_progress_start /home/mahesh/Dropbox/shared/main_project/vslam/CMakeFiles /home/mahesh/Dropbox/shared/main_project/vslam/matchlib/CMakeFiles/progress.marks
-	cd /home/mahesh/Dropbox/shared/main_project/vslam && $(MAKE) -f CMakeFiles/Makefile2 matchlib/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/mahesh/Dropbox/shared/main_project/vslam/CMakeFiles 0
+	cd /home/mahesh/slam-phase2/slam && $(CMAKE_COMMAND) -E cmake_progress_start /home/mahesh/slam-phase2/slam/CMakeFiles /home/mahesh/slam-phase2/slam/matchlib/CMakeFiles/progress.marks
+	cd /home/mahesh/slam-phase2/slam && $(MAKE) -f CMakeFiles/Makefile2 matchlib/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/mahesh/slam-phase2/slam/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/mahesh/Dropbox/shared/main_project/vslam && $(MAKE) -f CMakeFiles/Makefile2 matchlib/clean
+	cd /home/mahesh/slam-phase2/slam && $(MAKE) -f CMakeFiles/Makefile2 matchlib/clean
 .PHONY : clean
 
 # The main clean target
@@ -88,22 +88,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/mahesh/Dropbox/shared/main_project/vslam && $(MAKE) -f CMakeFiles/Makefile2 matchlib/preinstall
+	cd /home/mahesh/slam-phase2/slam && $(MAKE) -f CMakeFiles/Makefile2 matchlib/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/mahesh/Dropbox/shared/main_project/vslam && $(MAKE) -f CMakeFiles/Makefile2 matchlib/preinstall
+	cd /home/mahesh/slam-phase2/slam && $(MAKE) -f CMakeFiles/Makefile2 matchlib/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/mahesh/Dropbox/shared/main_project/vslam && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/mahesh/slam-phase2/slam && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 matchlib/CMakeFiles/matchlib.dir/rule:
-	cd /home/mahesh/Dropbox/shared/main_project/vslam && $(MAKE) -f CMakeFiles/Makefile2 matchlib/CMakeFiles/matchlib.dir/rule
+	cd /home/mahesh/slam-phase2/slam && $(MAKE) -f CMakeFiles/Makefile2 matchlib/CMakeFiles/matchlib.dir/rule
 .PHONY : matchlib/CMakeFiles/matchlib.dir/rule
 
 # Convenience name for target.
@@ -112,7 +112,7 @@ matchlib: matchlib/CMakeFiles/matchlib.dir/rule
 
 # fast build rule for target.
 matchlib/fast:
-	cd /home/mahesh/Dropbox/shared/main_project/vslam && $(MAKE) -f matchlib/CMakeFiles/matchlib.dir/build.make matchlib/CMakeFiles/matchlib.dir/build
+	cd /home/mahesh/slam-phase2/slam && $(MAKE) -f matchlib/CMakeFiles/matchlib.dir/build.make matchlib/CMakeFiles/matchlib.dir/build
 .PHONY : matchlib/fast
 
 matchlib.o: matchlib.cpp.o
@@ -120,7 +120,7 @@ matchlib.o: matchlib.cpp.o
 
 # target to build an object file
 matchlib.cpp.o:
-	cd /home/mahesh/Dropbox/shared/main_project/vslam && $(MAKE) -f matchlib/CMakeFiles/matchlib.dir/build.make matchlib/CMakeFiles/matchlib.dir/matchlib.cpp.o
+	cd /home/mahesh/slam-phase2/slam && $(MAKE) -f matchlib/CMakeFiles/matchlib.dir/build.make matchlib/CMakeFiles/matchlib.dir/matchlib.cpp.o
 .PHONY : matchlib.cpp.o
 
 matchlib.i: matchlib.cpp.i
@@ -128,7 +128,7 @@ matchlib.i: matchlib.cpp.i
 
 # target to preprocess a source file
 matchlib.cpp.i:
-	cd /home/mahesh/Dropbox/shared/main_project/vslam && $(MAKE) -f matchlib/CMakeFiles/matchlib.dir/build.make matchlib/CMakeFiles/matchlib.dir/matchlib.cpp.i
+	cd /home/mahesh/slam-phase2/slam && $(MAKE) -f matchlib/CMakeFiles/matchlib.dir/build.make matchlib/CMakeFiles/matchlib.dir/matchlib.cpp.i
 .PHONY : matchlib.cpp.i
 
 matchlib.s: matchlib.cpp.s
@@ -136,7 +136,7 @@ matchlib.s: matchlib.cpp.s
 
 # target to generate assembly for a file
 matchlib.cpp.s:
-	cd /home/mahesh/Dropbox/shared/main_project/vslam && $(MAKE) -f matchlib/CMakeFiles/matchlib.dir/build.make matchlib/CMakeFiles/matchlib.dir/matchlib.cpp.s
+	cd /home/mahesh/slam-phase2/slam && $(MAKE) -f matchlib/CMakeFiles/matchlib.dir/build.make matchlib/CMakeFiles/matchlib.dir/matchlib.cpp.s
 .PHONY : matchlib.cpp.s
 
 # Help Target
@@ -162,6 +162,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/mahesh/Dropbox/shared/main_project/vslam && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/mahesh/slam-phase2/slam && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 
