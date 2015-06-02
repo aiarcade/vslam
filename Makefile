@@ -128,6 +128,19 @@ depend:
 .PHONY : 3d_test/fast
 
 #=============================================================================
+# Target rules for targets named depth_test
+
+# Build rule for target.
+depth_test: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 depth_test
+.PHONY : depth_test
+
+# fast build rule for target.
+depth_test/fast:
+	$(MAKE) -f CMakeFiles/depth_test.dir/build.make CMakeFiles/depth_test.dir/build
+.PHONY : depth_test/fast
+
+#=============================================================================
 # Target rules for targets named feature_test
 
 # Build rule for target.
@@ -165,6 +178,30 @@ matchlib: cmake_check_build_system
 matchlib/fast:
 	$(MAKE) -f matchlib/CMakeFiles/matchlib.dir/build.make matchlib/CMakeFiles/matchlib.dir/build
 .PHONY : matchlib/fast
+
+test/depth_test.o: test/depth_test.cpp.o
+.PHONY : test/depth_test.o
+
+# target to build an object file
+test/depth_test.cpp.o:
+	$(MAKE) -f CMakeFiles/depth_test.dir/build.make CMakeFiles/depth_test.dir/test/depth_test.cpp.o
+.PHONY : test/depth_test.cpp.o
+
+test/depth_test.i: test/depth_test.cpp.i
+.PHONY : test/depth_test.i
+
+# target to preprocess a source file
+test/depth_test.cpp.i:
+	$(MAKE) -f CMakeFiles/depth_test.dir/build.make CMakeFiles/depth_test.dir/test/depth_test.cpp.i
+.PHONY : test/depth_test.cpp.i
+
+test/depth_test.s: test/depth_test.cpp.s
+.PHONY : test/depth_test.s
+
+# target to generate assembly for a file
+test/depth_test.cpp.s:
+	$(MAKE) -f CMakeFiles/depth_test.dir/build.make CMakeFiles/depth_test.dir/test/depth_test.cpp.s
+.PHONY : test/depth_test.cpp.s
 
 test/feature_test.o: test/feature_test.cpp.o
 .PHONY : test/feature_test.o
@@ -246,11 +283,15 @@ help:
 	@echo "... depend"
 	@echo "... 3d_ptest"
 	@echo "... 3d_test"
+	@echo "... depth_test"
 	@echo "... edit_cache"
 	@echo "... feature_test"
 	@echo "... rebuild_cache"
 	@echo "... features2d"
 	@echo "... matchlib"
+	@echo "... test/depth_test.o"
+	@echo "... test/depth_test.i"
+	@echo "... test/depth_test.s"
 	@echo "... test/feature_test.o"
 	@echo "... test/feature_test.i"
 	@echo "... test/feature_test.s"

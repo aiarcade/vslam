@@ -92,9 +92,49 @@ int main( int argc, char** argv )
     
     cv::Mat pnts3D;
     cv::triangulatePoints(P0,P1,points1,points2,pnts3D);
-    cout<<pnts3D.size();
+    cout<<"3d point size"<<pnts3D.size()<<endl;
     saveXYZ("out.pcd",pnts3D);
     
+    for( size_t m = 0; m < matches.size(); m++ )
+    {
+        
+       
+       
     
+    }
+    //cv::Mat K(3,3,cv::DataType<float>::type); // intrinsic parameter matrix
+    //cv::Mat R(3,3,cv::DataType<float>::type); // rotation matrix
+    //cv::Mat T(4,1,cv::DataType<float>::type); // translation vector
+    
+    //cv::decomposeProjectionMatrix(P0, K, R, T);
+    
+    
+    
+   
+    //cv::Mat distCoeffs(4, 1, CV_64FC1);
+    //cv::Mat rvec(3, 1, CV_64FC1);
+    //cv::Mat tvec(3, 1, CV_64FC1);
+    //cv::Mat d(3, 3, CV_64FC1);
+    
+    //cv::Mat new3dpoints;
+    
+    //new3dpoints=pnts3D.rowRange(0,3).clone();
+    
+   
+    //cout << "cam matrix"<<K<<endl;
+   
+    //cv::transpose(new3dpoints,new3dpoints);
+     //cout<<"new size"<<new3dpoints.size()<<endl;
+    //cv::solvePnPRansac(new3dpoints,points1,K, distCoeffs, rvec, tvec, false, CV_ITERATIVE);
+    //cout<<rvec<<endl;
+
+    //cv::Mat rvecR(3,1,cv::DataType<double>::type);
+    //cv::Rodrigues(rvec,rvecR);
+    //std::vector<cv::Point2f> projectedPoints;
+    //cv::projectPoints(new3dpoints,rvecR,tvec, K,distCoeffs, projectedPoints);
+    //for(unsigned int i = 0; i < projectedPoints.size(); ++i)
+    //{
+        //std::cout << "Image point: " << points1[i] << " Projected to " << projectedPoints[i] << std::endl;
+    //}
     return 0;
 }
