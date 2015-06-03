@@ -65,7 +65,7 @@ cv::Mat computeCameraPos(cv::Mat points3d)
     
    
     cv::transpose(new3dpoints,new3dpoints);
-     cout<<"new size"<<new3dpoints.size()<<endl;
+    cout<<"new size"<<new3dpoints.size()<<endl;
     cv::solvePnP(new3dpoints,points1,K, distCoeffs, rvec, tvec, false, CV_ITERATIVE);
     
 
@@ -92,6 +92,8 @@ cv::Mat estimate3Dpoints(std::vector<cv::DMatch> matches,std::vector<cv::KeyPoin
                     std::vector<cv::KeyPoint> keypoints2)
 {
     
+    points1.clear();
+    points2.clear();
     for (std::vector<cv::DMatch>::
          const_iterator it= matches.begin();
          it!= matches.end(); ++it) {
@@ -111,7 +113,7 @@ cv::Mat estimate3Dpoints(std::vector<cv::DMatch> matches,std::vector<cv::KeyPoin
     
     cv::Mat pnts3D;
     cv::triangulatePoints(P0,P1,points1,points2,pnts3D);
-    
+    cout<<"Estimated size "<<pnts3D.size();
     return pnts3D;
     
     
@@ -157,7 +159,8 @@ int main( int argc, char** argv )
     P1.at<float>(1,2)=185.2157; 
     P1.at<float>(2,2)=1.0;
     
-    
+    cv::Mat pcamPos;
+    cv::Mat camPos;
     
     
     
@@ -215,6 +218,12 @@ int main( int argc, char** argv )
         cout<<"keyl:"<< l_keypoints.size()<<" keyr:"<< r_keypoints.size()<<" matches"<<matches.size()<<" 3d size"<<pnts3D.size()<<endl;
     
         cv::Mat camPos=computeCameraPos(pnts3D);
+        //A NaN
+        if(camPos.at<double>(0,0)!=camPos.at<double>(0,0))
+        {
+            cout<<"Invalid campos Nan"<<endl;
+            camPos=pcamPos.clone();
+        }
         
         vector<string>result;
         result.push_back(doubleToString(camPos.at<double>(0,0)));
@@ -231,7 +240,7 @@ int main( int argc, char** argv )
         result.push_back(doubleToString(camPos.at<double>(2,3)));
         rst_writer.writeLine(result);
         
-        
+        pcamPos=camPos.clone();
         
        
         //Matcher * ll_matcher= new Matcher(1);
