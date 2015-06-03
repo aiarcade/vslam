@@ -179,6 +179,19 @@ matchlib/fast:
 	$(MAKE) -f matchlib/CMakeFiles/matchlib.dir/build.make matchlib/CMakeFiles/matchlib.dir/build
 .PHONY : matchlib/fast
 
+#=============================================================================
+# Target rules for targets named csvwriter
+
+# Build rule for target.
+csvwriter: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 csvwriter
+.PHONY : csvwriter
+
+# fast build rule for target.
+csvwriter/fast:
+	$(MAKE) -f csvwriter/CMakeFiles/csvwriter.dir/build.make csvwriter/CMakeFiles/csvwriter.dir/build
+.PHONY : csvwriter/fast
+
 test/depth_test.o: test/depth_test.cpp.o
 .PHONY : test/depth_test.o
 
@@ -289,6 +302,7 @@ help:
 	@echo "... stereo_depth_estimation"
 	@echo "... features"
 	@echo "... matchlib"
+	@echo "... csvwriter"
 	@echo "... test/depth_test.o"
 	@echo "... test/depth_test.i"
 	@echo "... test/depth_test.s"

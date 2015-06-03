@@ -1,6 +1,6 @@
 #include "features.hpp"
 #include "matchlib.hpp"
-
+#include "csvwriter.hpp"
 
 #include "opencv2/calib3d/calib3d.hpp"
 #include "opencv2/imgproc/imgproc.hpp"
@@ -13,6 +13,9 @@
 
 #define DESC_TYPE 1
 #define MATCHER 1
+#define NO_IMAGES 1101
+#define OUT_FILE "/home/mahesh/out/sift01.csv"
+
 using namespace std;
 
 cv::Mat P0 = cv::Mat::zeros(3, 4, CV_32F);
@@ -37,7 +40,7 @@ static void saveXYZ(const char* filename, const cv::Mat mat)
     fclose(fp);
 }
 
-void computeCameraPos(cv::Mat points3d)
+cv::Mat computeCameraPos(cv::Mat points3d)
 {
     
     
@@ -47,8 +50,7 @@ void computeCameraPos(cv::Mat points3d)
     
     cv::decomposeProjectionMatrix(P0, K, R, T);
     
-    
-    
+      
    
     cv::Mat distCoeffs(4, 1, CV_64FC1);
     cv::Mat rvec(3, 1, CV_64FC1);
@@ -81,7 +83,8 @@ void computeCameraPos(cv::Mat points3d)
     p[0] = p[1] = p[2] = 0; p[3] = 1;
     
     cout<<"campos "<<Tp<<endl;
-
+    
+    return Tp;
 
 }
 
@@ -114,6 +117,13 @@ cv::Mat estimate3Dpoints(std::vector<cv::DMatch> matches,std::vector<cv::KeyPoin
     
     
 }
+string doubleToString(double dbl)
+{
+    std::ostringstream strs;
+    strs << dbl;
+    std::string str = strs.str();
+    return str;
+}
 
 
 int main( int argc, char** argv )
@@ -123,6 +133,9 @@ int main( int argc, char** argv )
      cout <<" Usage: depth_test dir" << endl;
      return -1;
     }
+    
+    CSVWriter rst_writer;
+    
 
     cv::Mat pr_image,r_image;
     cv::Mat pl_image,l_image;
@@ -153,24 +166,24 @@ int main( int argc, char** argv )
     string pleft_img_file_name  = dir + "/image_0/" + base_name;
     string pright_img_file_name = dir + "/image_1/" + base_name;
     
-    pr_image = cv::imread(pleft_img_file_name,CV_LOAD_IMAGE_GRAYSCALE);   
-    pl_image = cv::imread(pright_img_file_name,CV_LOAD_IMAGE_GRAYSCALE);
+    //pr_image = cv::imread(pleft_img_file_name,CV_LOAD_IMAGE_GRAYSCALE);   
+    //pl_image = cv::imread(pright_img_file_name,CV_LOAD_IMAGE_GRAYSCALE);
      
-    FeatureDetector *pfd_r=new FeatureDetector(1);
-    pfd_r->extractFeatures(&pr_image);
-    FeatureDetector *pfd_l=new FeatureDetector(1);
-    pfd_l->extractFeatures(&pl_image);
+    //FeatureDetector *pfd_r=new FeatureDetector(1);
+    //pfd_r->extractFeatures(&pr_image);
+    //FeatureDetector *pfd_l=new FeatureDetector(1);
+    //pfd_l->extractFeatures(&pl_image);
     
-    Matcher * pmatcher= new Matcher(1);
-    pmatcher->match(pfd_r->getDescriptors(),pfd_l->getDescriptors());
-    std::vector<cv::DMatch> pmatches=pmatcher->getAllMatches();
+    //Matcher * pmatcher= new Matcher(1);
+    //pmatcher->match(pfd_r->getDescriptors(),pfd_l->getDescriptors());
+    //std::vector<cv::DMatch> pmatches=pmatcher->getAllMatches();
     
-    std::vector<cv::KeyPoint> pl_keypoints, pr_keypoints;
-    pl_keypoints=pfd_l->getKeyPoints();
-    pr_keypoints=pfd_r->getKeyPoints();
-    cv::Mat p_pnts3D=estimate3Dpoints(pmatches,pl_keypoints,pr_keypoints);
-    
-    for (int i=1; i<10; i++) {
+    //std::vector<cv::KeyPoint> pl_keypoints, pr_keypoints;
+    //pl_keypoints=pfd_l->getKeyPoints();
+    //pr_keypoints=pfd_r->getKeyPoints();
+    //cv::Mat p_pnts3D=estimate3Dpoints(pmatches,pl_keypoints,pr_keypoints);
+    rst_writer.openFile(OUT_FILE," ",1);
+    for (int i=0; i<NO_IMAGES; i++) {
         
         
        
@@ -178,7 +191,7 @@ int main( int argc, char** argv )
         string left_img_file_name  = dir + "/image_0/" + base_name;
         string right_img_file_name = dir + "/image_1/" + base_name;
         
-            
+        cout << "Position estimation on image"<<left_img_file_name<<endl;    
 
         
         r_image = cv::imread(left_img_file_name,CV_LOAD_IMAGE_GRAYSCALE);   
@@ -201,7 +214,25 @@ int main( int argc, char** argv )
         cv::Mat pnts3D=estimate3Dpoints(matches,l_keypoints,r_keypoints);
         cout<<"keyl:"<< l_keypoints.size()<<" keyr:"<< r_keypoints.size()<<" matches"<<matches.size()<<" 3d size"<<pnts3D.size()<<endl;
     
-        computeCameraPos(pnts3D);
+        cv::Mat camPos=computeCameraPos(pnts3D);
+        
+        vector<string>result;
+        result.push_back(doubleToString(camPos.at<double>(0,0)));
+        result.push_back(doubleToString(camPos.at<double>(0,1)));
+        result.push_back(doubleToString(camPos.at<double>(0,2)));
+        result.push_back(doubleToString(camPos.at<double>(0,3)));
+        result.push_back(doubleToString(camPos.at<double>(1,0)));
+        result.push_back(doubleToString(camPos.at<double>(1,1)));
+        result.push_back(doubleToString(camPos.at<double>(1,2)));
+        result.push_back(doubleToString(camPos.at<double>(1,3)));
+        result.push_back(doubleToString(camPos.at<double>(2,0)));
+        result.push_back(doubleToString(camPos.at<double>(2,1)));
+        result.push_back(doubleToString(camPos.at<double>(2,2)));
+        result.push_back(doubleToString(camPos.at<double>(2,3)));
+        rst_writer.writeLine(result);
+        
+        
+        
        
         //Matcher * ll_matcher= new Matcher(1);
         //ll_matcher->match(fd_l->getDescriptors(),pfd_l->getDescriptors());
@@ -213,9 +244,7 @@ int main( int argc, char** argv )
         //rr_matcher->match(fd_r->getDescriptors(),pfd_r->getDescriptors());
         
         //std::vector<cv::DMatch> rr_matches=rr_matcher->getAllMatches();
-        
-       
-        
+            
         
         
     
@@ -223,39 +252,6 @@ int main( int argc, char** argv )
     
     }
    
-    //cv::Mat K(3,3,cv::DataType<float>::type); // intrinsic parameter matrix
-    //cv::Mat R(3,3,cv::DataType<float>::type); // rotation matrix
-    //cv::Mat T(4,1,cv::DataType<float>::type); // translation vector
     
-    //cv::decomposeProjectionMatrix(P0, K, R, T);
-    
-    
-    
-   
-    //cv::Mat distCoeffs(4, 1, CV_64FC1);
-    //cv::Mat rvec(3, 1, CV_64FC1);
-    //cv::Mat tvec(3, 1, CV_64FC1);
-    //cv::Mat d(3, 3, CV_64FC1);
-    
-    //cv::Mat new3dpoints;
-    
-    //new3dpoints=pnts3D.rowRange(0,3).clone();
-    
-   
-    //cout << "cam matrix"<<K<<endl;
-   
-    //cv::transpose(new3dpoints,new3dpoints);
-     //cout<<"new size"<<new3dpoints.size()<<endl;
-    //cv::solvePnPRansac(new3dpoints,points1,K, distCoeffs, rvec, tvec, false, CV_ITERATIVE);
-    //cout<<rvec<<endl;
-
-    //cv::Mat rvecR(3,1,cv::DataType<double>::type);
-    //cv::Rodrigues(rvec,rvecR);
-    //std::vector<cv::Point2f> projectedPoints;
-    //cv::projectPoints(new3dpoints,rvecR,tvec, K,distCoeffs, projectedPoints);
-    //for(unsigned int i = 0; i < projectedPoints.size(); ++i)
-    //{
-        //std::cout << "Image point: " << points1[i] << " Projected to " << projectedPoints[i] << std::endl;
-    //}
     return 0;
 }
