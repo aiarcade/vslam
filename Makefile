@@ -128,19 +128,6 @@ depend:
 .PHONY : 3d_test/fast
 
 #=============================================================================
-# Target rules for targets named depth_test
-
-# Build rule for target.
-depth_test: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 depth_test
-.PHONY : depth_test
-
-# fast build rule for target.
-depth_test/fast:
-	$(MAKE) -f CMakeFiles/depth_test.dir/build.make CMakeFiles/depth_test.dir/build
-.PHONY : depth_test/fast
-
-#=============================================================================
 # Target rules for targets named feature_test
 
 # Build rule for target.
@@ -154,17 +141,30 @@ feature_test/fast:
 .PHONY : feature_test/fast
 
 #=============================================================================
-# Target rules for targets named features2d
+# Target rules for targets named stereo_depth_estimation
 
 # Build rule for target.
-features2d: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 features2d
-.PHONY : features2d
+stereo_depth_estimation: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 stereo_depth_estimation
+.PHONY : stereo_depth_estimation
 
 # fast build rule for target.
-features2d/fast:
-	$(MAKE) -f features2d/CMakeFiles/features2d.dir/build.make features2d/CMakeFiles/features2d.dir/build
-.PHONY : features2d/fast
+stereo_depth_estimation/fast:
+	$(MAKE) -f CMakeFiles/stereo_depth_estimation.dir/build.make CMakeFiles/stereo_depth_estimation.dir/build
+.PHONY : stereo_depth_estimation/fast
+
+#=============================================================================
+# Target rules for targets named features
+
+# Build rule for target.
+features: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 features
+.PHONY : features
+
+# fast build rule for target.
+features/fast:
+	$(MAKE) -f features/CMakeFiles/features.dir/build.make features/CMakeFiles/features.dir/build
+.PHONY : features/fast
 
 #=============================================================================
 # Target rules for targets named matchlib
@@ -184,7 +184,7 @@ test/depth_test.o: test/depth_test.cpp.o
 
 # target to build an object file
 test/depth_test.cpp.o:
-	$(MAKE) -f CMakeFiles/depth_test.dir/build.make CMakeFiles/depth_test.dir/test/depth_test.cpp.o
+	$(MAKE) -f CMakeFiles/stereo_depth_estimation.dir/build.make CMakeFiles/stereo_depth_estimation.dir/test/depth_test.cpp.o
 .PHONY : test/depth_test.cpp.o
 
 test/depth_test.i: test/depth_test.cpp.i
@@ -192,7 +192,7 @@ test/depth_test.i: test/depth_test.cpp.i
 
 # target to preprocess a source file
 test/depth_test.cpp.i:
-	$(MAKE) -f CMakeFiles/depth_test.dir/build.make CMakeFiles/depth_test.dir/test/depth_test.cpp.i
+	$(MAKE) -f CMakeFiles/stereo_depth_estimation.dir/build.make CMakeFiles/stereo_depth_estimation.dir/test/depth_test.cpp.i
 .PHONY : test/depth_test.cpp.i
 
 test/depth_test.s: test/depth_test.cpp.s
@@ -200,7 +200,7 @@ test/depth_test.s: test/depth_test.cpp.s
 
 # target to generate assembly for a file
 test/depth_test.cpp.s:
-	$(MAKE) -f CMakeFiles/depth_test.dir/build.make CMakeFiles/depth_test.dir/test/depth_test.cpp.s
+	$(MAKE) -f CMakeFiles/stereo_depth_estimation.dir/build.make CMakeFiles/stereo_depth_estimation.dir/test/depth_test.cpp.s
 .PHONY : test/depth_test.cpp.s
 
 test/feature_test.o: test/feature_test.cpp.o
@@ -283,11 +283,11 @@ help:
 	@echo "... depend"
 	@echo "... 3d_ptest"
 	@echo "... 3d_test"
-	@echo "... depth_test"
 	@echo "... edit_cache"
 	@echo "... feature_test"
 	@echo "... rebuild_cache"
-	@echo "... features2d"
+	@echo "... stereo_depth_estimation"
+	@echo "... features"
 	@echo "... matchlib"
 	@echo "... test/depth_test.o"
 	@echo "... test/depth_test.i"

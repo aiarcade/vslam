@@ -1,5 +1,5 @@
 
-#include "features2d.hpp"
+#include "features.hpp"
 #include "matchlib.hpp"
 
 using namespace std;
