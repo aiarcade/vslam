@@ -6,6 +6,7 @@
 #include "opencv2/imgproc/imgproc.hpp"
 #include "opencv2/highgui/highgui.hpp"
 #include "opencv2/contrib/contrib.hpp"
+#include "opencv2/video/tracking.hpp"
 
 
 
@@ -22,6 +23,8 @@ cv::Mat P0 = cv::Mat::zeros(3, 4, CV_32F);
 cv::Mat P1 = cv::Mat::zeros(3, 4, CV_32F);
 
 std::vector<cv::Point2f> points1, points2;
+
+cv::KalmanFilter KF(4, 4, 0);
 
 
 static void saveXYZ(const char* filename, const cv::Mat mat)
@@ -52,21 +55,48 @@ cv::Mat computeCameraPos(cv::Mat points3d)
     
       
    
-    cv::Mat distCoeffs(4, 1, CV_64FC1);
+    cv::Mat distCoeffs(5, 1, CV_64FC1);
+    
+    //-3.728755e-01 2.037299e-01 2.219027e-03 1.383707e-03 -7.233722e-02
+     P1.at<float>(1,0)=-0.3728755;
+     P1.at<float>(2,0)=0.2037299;
+     P1.at<float>(3,0)=.002219027;
+     P1.at<float>(4,0)=.001383707;
+     P1.at<float>(5,0)=-.07233722;
+    
+    
     cv::Mat rvec(3, 1, CV_64FC1);
     cv::Mat tvec(3, 1, CV_64FC1);
     cv::Mat d(3, 3, CV_64FC1);
     
     cv::Mat new3dpoints;
     
-    new3dpoints=points3d.rowRange(0,3).clone();
+    new3dpoints=points3d.rowRange(0,3).clone().t();
     
+    //cout<<"org mat"<<points3d(cv::Range(0,4), cv::Range(0,3))<<endl;
+    //cout<<"tran mat"<<points3d.t()(cv::Range(0,4), cv::Range(0,3));
+    
+    points3d=points3d.t();
+    
+    for (int vi = 0; vi < points3d.rows; vi++)
+    {
+       new3dpoints.at<float>(vi,0)=new3dpoints.at<float>(vi,0)/points3d.at<float>(vi,3);
+       new3dpoints.at<float>(vi,1)=new3dpoints.at<float>(vi,1)/points3d.at<float>(vi,3);
+       new3dpoints.at<float>(vi,2)=new3dpoints.at<float>(vi,2)/points3d.at<float>(vi,3);
+    }
+    
+    
+    //cout<<"org mat"<<new3dpoints(cv::Range(0,4), cv::Range(0,3))<<endl;
+    //cv::convertPointsHomogeneous(points4d,euclidian);
+   
+    //cout<<euclidian<<endl;
    
     
+    
+    //cv::transpose(new3dpoints,new3dpoints);
+    //cout<<"new size"<<new3dpoints.size()<<endl;
    
-    cv::transpose(new3dpoints,new3dpoints);
-    cout<<"new size"<<new3dpoints.size()<<endl;
-    cv::solvePnP(new3dpoints,points1,K, distCoeffs, rvec, tvec, false, CV_ITERATIVE);
+    cv::solvePnPRansac(new3dpoints,points1,K, distCoeffs, rvec, tvec, false, CV_ITERATIVE);
     
 
     cv::Mat mR;
@@ -82,11 +112,22 @@ cv::Mat computeCameraPos(cv::Mat points3d)
     double *p = Tp.ptr<double>(3);
     p[0] = p[1] = p[2] = 0; p[3] = 1;
     
-    cout<<"campos "<<Tp<<endl;
+    //cout<<"campos "<<Tp<<endl;
     
     return Tp;
 
 }
+
+void KalmanCorrection(cv::Mat campos)
+{
+    
+    
+    
+    
+    
+    
+}
+
 
 cv::Mat estimate3Dpoints(std::vector<cv::DMatch> matches,std::vector<cv::KeyPoint> keypoints1,
                     std::vector<cv::KeyPoint> keypoints2)
@@ -113,7 +154,7 @@ cv::Mat estimate3Dpoints(std::vector<cv::DMatch> matches,std::vector<cv::KeyPoin
     
     cv::Mat pnts3D;
     cv::triangulatePoints(P0,P1,points1,points2,pnts3D);
-    cout<<"Estimated size "<<pnts3D.size();
+    //cout<<"Estimated size "<<pnts3D.size();
     return pnts3D;
     
     
@@ -142,21 +183,28 @@ int main( int argc, char** argv )
     cv::Mat pr_image,r_image;
     cv::Mat pl_image,l_image;
     cv::Mat output_image;
-    
+    cv::Mat pos=cv::Mat::eye(4,4,CV_64F);
     string dir=argv[1];
-    
-    P0.at<float>(0,0) = 718.856 ;
-    P0.at<float>(0,2) = 607.1928;
-    P0.at<float>(1,1)=718.856;
-    P0.at<float>(1,2)=185.2157;
+    /*
+    P_rect_00: 7.215377e+02 0.000000e+00 6.095593e+02 0.000000e+00 
+    *   `      0.000000e+00 7.215377e+02 1.728540e+02 0.000000e+00 
+    *          0.000000e+00 0.000000e+00 1.000000e+00 0.000000e+00
+    */
+    P0.at<float>(0,0) = 721.5377 ;
+    P0.at<float>(0,2) = 609.5593;
+    P0.at<float>(1,1)=721.5377;
+    P0.at<float>(1,2)=172.8540;
     P0.at<float>(2,2)=1.0;
-    
-    
-    P1.at<float>(0,0)=718.856;
-    P1.at<float>(0,2)=607.1928; 
-    P1.at<float>(0,3)=-386.1448; 
-    P1.at<float>(1,1)=718.856; 
-    P1.at<float>(1,2)=185.2157; 
+    /* 
+    P_rect_01: 7.215377e+02 0.000000e+00 6.095593e+02 -3.875744e+02 
+                0.000000e+00 7.215377e+02 1.728540e+02 0.000000e+00 
+                0.000000e+00 0.000000e+00 1.000000e+00 0.000000e+00
+    */
+    P1.at<float>(0,0)=721.5377;
+    P1.at<float>(0,2)=609.5593; 
+    P1.at<float>(0,3)=-387.5744; 
+    P1.at<float>(1,1)=721.5377; 
+    P1.at<float>(1,2)=172.8540; 
     P1.at<float>(2,2)=1.0;
     
     cv::Mat pcamPos;
@@ -168,23 +216,6 @@ int main( int argc, char** argv )
     sprintf(base_name,"%06d.png",0);
     string pleft_img_file_name  = dir + "/image_0/" + base_name;
     string pright_img_file_name = dir + "/image_1/" + base_name;
-    
-    //pr_image = cv::imread(pleft_img_file_name,CV_LOAD_IMAGE_GRAYSCALE);   
-    //pl_image = cv::imread(pright_img_file_name,CV_LOAD_IMAGE_GRAYSCALE);
-     
-    //FeatureDetector *pfd_r=new FeatureDetector(1);
-    //pfd_r->extractFeatures(&pr_image);
-    //FeatureDetector *pfd_l=new FeatureDetector(1);
-    //pfd_l->extractFeatures(&pl_image);
-    
-    //Matcher * pmatcher= new Matcher(1);
-    //pmatcher->match(pfd_r->getDescriptors(),pfd_l->getDescriptors());
-    //std::vector<cv::DMatch> pmatches=pmatcher->getAllMatches();
-    
-    //std::vector<cv::KeyPoint> pl_keypoints, pr_keypoints;
-    //pl_keypoints=pfd_l->getKeyPoints();
-    //pr_keypoints=pfd_r->getKeyPoints();
-    //cv::Mat p_pnts3D=estimate3Dpoints(pmatches,pl_keypoints,pr_keypoints);
     rst_writer.openFile(OUT_FILE," ",1);
     for (int i=0; i<NO_IMAGES; i++) {
         
@@ -224,24 +255,26 @@ int main( int argc, char** argv )
             cout<<"Invalid campos Nan"<<endl;
             camPos=pcamPos.clone();
         }
+        pos=pos*camPos.inv();
+        cout<<pos<<endl;
         
         vector<string>result;
-        result.push_back(doubleToString(camPos.at<double>(0,0)));
-        result.push_back(doubleToString(camPos.at<double>(0,1)));
-        result.push_back(doubleToString(camPos.at<double>(0,2)));
-        result.push_back(doubleToString(camPos.at<double>(0,3)));
-        result.push_back(doubleToString(camPos.at<double>(1,0)));
-        result.push_back(doubleToString(camPos.at<double>(1,1)));
-        result.push_back(doubleToString(camPos.at<double>(1,2)));
-        result.push_back(doubleToString(camPos.at<double>(1,3)));
-        result.push_back(doubleToString(camPos.at<double>(2,0)));
-        result.push_back(doubleToString(camPos.at<double>(2,1)));
-        result.push_back(doubleToString(camPos.at<double>(2,2)));
-        result.push_back(doubleToString(camPos.at<double>(2,3)));
+        result.push_back(doubleToString(pos.at<double>(0,0)));
+        result.push_back(doubleToString(pos.at<double>(0,1)));
+        result.push_back(doubleToString(pos.at<double>(0,2)));
+        result.push_back(doubleToString(pos.at<double>(0,3)));
+        result.push_back(doubleToString(pos.at<double>(1,0)));
+        result.push_back(doubleToString(pos.at<double>(1,1)));
+        result.push_back(doubleToString(pos.at<double>(1,2)));
+        result.push_back(doubleToString(pos.at<double>(1,3)));
+        result.push_back(doubleToString(pos.at<double>(2,0)));
+        result.push_back(doubleToString(pos.at<double>(2,1)));
+        result.push_back(doubleToString(pos.at<double>(2,2)));
+        result.push_back(doubleToString(pos.at<double>(2,3)));
         rst_writer.writeLine(result);
         
         pcamPos=camPos.clone();
-        
+         
        
         //Matcher * ll_matcher= new Matcher(1);
         //ll_matcher->match(fd_l->getDescriptors(),pfd_l->getDescriptors());
